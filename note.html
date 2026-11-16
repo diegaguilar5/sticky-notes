@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'" />
+  <title>Nota</title>
+  <link rel="stylesheet" href="note.css" />
+</head>
+<body class="yellow">
+  <header>
+    <div class="colors">
+      <button class="dot yellow" data-color="yellow" title="Amarillo"></button>
+      <button class="dot pink" data-color="pink" title="Rosa"></button>
+      <button class="dot blue" data-color="blue" title="Azul"></button>
+      <button class="dot green" data-color="green" title="Verde"></button>
+    </div>
+    <div class="actions">
+      <button id="add" title="Nueva nota (⌘⇧N)">+</button>
+      <button id="del" title="Borrar nota">×</button>
+    </div>
+  </header>
+  <main id="list"></main>
+  <script src="note.js"></script>
+</body>
+</html>

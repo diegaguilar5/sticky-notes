@@ -1,0 +1,86 @@
+* { box-sizing: border-box; }
+
+body {
+  --bg: #fff3a3;
+  --bar: #f5e57c;
+  --ink: #3a3520;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.45 -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  overflow: hidden;
+  border-radius: 8px;
+}
+body.yellow { --bg: #fff3a3; --bar: #f5e57c; --ink: #3a3520; }
+body.pink   { --bg: #ffd1e3; --bar: #f7b6cf; --ink: #432633; }
+body.blue   { --bg: #cbe7ff; --bar: #a9d3f5; --ink: #1f3547; }
+body.green  { --bg: #d3f5cf; --bar: #b4e5ae; --ink: #243b22; }
+
+header {
+  height: 28px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background: var(--bar);
+  -webkit-app-region: drag;
+  user-select: none;
+}
+header button { -webkit-app-region: no-drag; }
+
+.colors { display: flex; gap: 6px; }
+.dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 0;
+  cursor: pointer;
+}
+.dot.yellow { background: #fff3a3; }
+.dot.pink   { background: #ffd1e3; }
+.dot.blue   { background: #cbe7ff; }
+.dot.green  { background: #d3f5cf; }
+.dot:hover { transform: scale(1.2); }
+
+.actions { display: flex; gap: 2px; }
+.actions button {
+  width: 22px; height: 22px;
+  border: 0; border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 18px; line-height: 1;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.actions button:hover { opacity: 1; background: rgba(0, 0, 0, 0.1); }
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 10px 16px;
+  cursor: text;
+}
+
+.row { display: flex; align-items: flex-start; gap: 6px; min-height: 21px; }
+.row input[type='checkbox'] {
+  flex: none;
+  margin: 4px 0 0;
+  width: 14px; height: 14px;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.text {
+  flex: 1;
+  min-width: 0;
+  outline: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.row.done .text { text-decoration: line-through; opacity: 0.5; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.2); border-radius: 4px; }
