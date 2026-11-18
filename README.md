@@ -13,7 +13,7 @@ npm start
 |---|---|
 | Mostrar / ocultar todas las notas | `⌘⇧P` |
 | Nueva nota | `⌘⇧N` |
-| Alternar checkbox en la línea | `⌘L` o escribir `[] ` |
+| Alternar checklist en la línea | `⌘L` o escribir `[] ` |
 | Marcar / desmarcar checkbox | clic o `⌘Enter` |
 
 Los atajos se cambian en `SHORTCUT_TOGGLE` y `SHORTCUT_NEW` de `main.js`.
