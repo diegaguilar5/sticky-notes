@@ -1,5 +1,7 @@
 const id = new URLSearchParams(location.search).get('id');
 const list = document.getElementById('list');
+const countEl = document.getElementById('count');
+const clearBtn = document.getElementById('clear');
 let lines = [{ t: '' }]; // [{t: string, c?: boolean}]  c definido => es checkbox
 
 const hasCheck = (l) => typeof l.c === 'boolean';
@@ -9,6 +11,39 @@ function render(focusIdx, caret = 0) {
   list.innerHTML = '';
   lines.forEach((l, i) => list.append(makeRow(l, i)));
   if (focusIdx != null) focusRow(focusIdx, caret);
+  updateCount();
+}
+
+// Marcar => la tarea baja al final. Desmarcar => sube justo encima de las hechas.
+function setChecked(l, value, caret) {
+  const wasFocused = caret != null;
+  lines.splice(lines.indexOf(l), 1);
+  l.c = value;
+  if (value) {
+    lines.push(l);
+  } else {
+    const firstDone = lines.findIndex((x) => x.c === true);
+    if (firstDone < 0) lines.push(l);
+    else lines.splice(firstDone, 0, l);
+  }
+  render(wasFocused ? lines.indexOf(l) : null, caret);
+  persist();
+}
+
+function updateCount() {
+  const total = lines.filter(hasCheck).length;
+  const done = lines.filter((l) => l.c === true).length;
+  countEl.textContent = total ? `${done}/${total}` : '';
+  clearBtn.hidden = done === 0;
+}
+
+function clearDone() {
+  const done = lines.filter((l) => l.c === true).length;
+  if (!done) return;
+  lines = lines.filter((l) => l.c !== true);
+  if (!lines.length) lines = [{ t: '' }];
+  render();
+  persist();
 }
 
 function focusRow(i, caret = 0) {
@@ -33,11 +68,7 @@ function makeRow(l, i) {
     const cb = document.createElement('input');
     cb.type = 'checkbox';
     cb.checked = l.c;
-    cb.addEventListener('change', () => {
-      l.c = cb.checked;
-      row.classList.toggle('done', l.c);
-      persist();
-    });
+    cb.addEventListener('change', () => setChecked(l, cb.checked));
     row.append(cb);
   }
 
@@ -124,9 +155,7 @@ function onKey(e, i, el) {
   // ⌘Enter: marca/desmarca el checkbox
   if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && hasCheck(l)) {
     e.preventDefault();
-    l.c = !l.c;
-    render(i, caretOffset());
-    persist();
+    setChecked(l, !l.c, caretOffset());
     return;
   }
 
@@ -176,6 +205,7 @@ document.querySelectorAll('.dot').forEach((b) =>
     window.api.setColor(id, b.dataset.color);
   })
 );
+clearBtn.addEventListener('click', clearDone);
 document.getElementById('add').addEventListener('click', () => window.api.newNote());
 document.getElementById('del').addEventListener('click', () => window.api.deleteNote(id));
 

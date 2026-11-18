@@ -46,6 +46,10 @@ header button { -webkit-app-region: no-drag; }
 .dot.green  { background: #d3f5cf; }
 .dot:hover { transform: scale(1.2); }
 
+#count { font-size: 11px; opacity: 0.6; font-variant-numeric: tabular-nums; }
+#clear { font-size: 14px !important; }
+#clear[hidden] { display: none; }
+
 .actions { display: flex; gap: 2px; }
 .actions button {
   width: 22px; height: 22px;
